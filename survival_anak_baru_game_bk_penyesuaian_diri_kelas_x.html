@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURVIVAL ANAK BARU: Misi Penyesuaian Diri Kelas X!</title>
+    <!-- Google Fonts: Fredoka (Judul Komik), Plus Jakarta Sans (Teks UI), Playfair Display (Piagam) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        popYellow: '#FFE135',
+                        popPink: '#FF5D8F',
+                        popBlue: '#38BDF8',
+                        popPurple: '#A855F7',
+                        popGreen: '#22C55E',
+                        popDark: '#1E1B4B',
+                        creamBg: '#FFFDF5'
+                    },
+                    boxShadow: {
+                        'comic': '5px 5px 0px 0px #1E1B4B',
+                        'comic-sm': '3px 3px 0px 0px #1E1B4B',
+                        'comic-lg': '8px 8px 0px 0px #1E1B4B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Gaya Kustom Pop-Art Komik & Animasi */
+        body {
+            background-color: #FFFDF5;
+            background-image: radial-gradient(#CBD5E1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: #1E1B4B;
+            overflow-x: hidden;
+        }
+
+        .comic-card {
+            border: 3px solid #1E1B4B;
+            box-shadow: 6px 6px 0px 0px #1E1B4B;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+
+        .comic-btn {
+            border: 3px solid #1E1B4B;
+            box-shadow: 4px 4px 0px 0px #1E1B4B;
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .comic-btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #1E1B4B;
+        }
+
+        .comic-btn:active:not(:disabled) {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px 0px #1E1B4B;
+        }
+
+        .option-btn {
+            border: 3px solid #1E1B4B;
+            box-shadow: 4px 4px 0px 0px #1E1B4B;
+            transition: all 0.18s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #1E1B4B;
+            background-color: #FEF9C3;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.85) translateY(15px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px) rotate(-1deg); }
+            40% { transform: translateX(8px) rotate(1deg); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+
+        .animate-float { animation: floatSlow 3.5s ease-in-out infinite; }
+        .animate-pop { animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .animate-shake { animation: shake 0.45s ease-in-out; }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Print Styles khusus Piagam */
+        @media print {
+            body * { visibility: hidden; }
+            #certificate-print-area, #certificate-print-area * { visibility: visible; }
+            #certificate-print-area {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans selection:bg-popYellow selection:text-popDark">
+
+    <!-- Canvas Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Header / Navbar -->
+    <header class="w-full max-w-5xl mx-auto px-4 pt-4 pb-2 flex items-center justify-between z-20">
+        <div class="flex items-center gap-2.5 bg-white px-3.5 py-2 rounded-2xl border-3 border-popDark shadow-comic-sm">
+            <span class="text-2xl">🧭</span>
+            <div>
+                <span class="font-display font-bold text-sm sm:text-base tracking-wide block leading-none text-popDark">BK ZONE • KELAS X</span>
+                <span class="text-[11px] font-semibold text-slate-500">Edisi Survival & Adaptasi</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- Tombol Info Materi -->
+            <button onclick="toggleModal('info-modal')" class="comic-btn bg-popBlue text-popDark font-bold text-xs sm:text-sm px-3 py-2 rounded-xl flex items-center gap-1.5" title="Panduan Materi BK">
+                <span>📘</span> <span class="hidden sm:inline">Materi BK</span>
+            </button>
+            <!-- Tombol Audio SFX -->
+            <button id="sfx-toggle-btn" onclick="toggleSound()" class="comic-btn bg-popYellow text-popDark font-bold text-xs sm:text-sm px-3 py-2 rounded-xl flex items-center gap-1.5" title="Suara Efek">
+                <span id="sfx-icon">🔊</span> <span id="sfx-label" class="hidden sm:inline">SFX ON</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Kontainer Utama -->
+    <main class="w-full max-w-4xl mx-auto px-4 py-4 flex-grow flex flex-col justify-center">
+
+        <!-- ========================================== -->
+        <!-- 1. LAYAR PEMBUKA (START SCREEN)            -->
+        <!-- ========================================== -->
+        <section id="start-screen" class="animate-pop">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 comic-card relative overflow-hidden">
+                <!-- Dekorasi Sudut Komik -->
+                <div class="absolute -top-6 -right-6 w-28 h-28 bg-popYellow rounded-full border-3 border-popDark opacity-80"></div>
+                <div class="absolute -bottom-8 -left-8 w-24 h-24 bg-popPink rounded-full border-3 border-popDark opacity-70"></div>
+
+                <div class="relative z-10 text-center max-w-2xl mx-auto">
+                    <div class="inline-flex items-center gap-2 bg-popYellow px-4 py-1.5 rounded-full border-2 border-popDark shadow-comic-sm mb-4 animate-float">
+                        <span class="text-lg">🎒</span>
+                        <span class="font-display font-bold text-xs sm:text-sm uppercase tracking-wider">Misi Bimbingan & Konseling SMA/MA</span>
+                    </div>
+
+                    <h1 class="font-display font-bold text-3xl sm:text-5xl text-popDark leading-tight mb-3">
+                        SURVIVAL ANAK BARU:<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-popPink via-popPurple to-blue-600">Misi Penyesuaian Diri Kelas X!</span>
+                    </h1>
+
+                    <div class="bg-amber-50 border-2 border-dashed border-popDark rounded-2xl p-4 mb-6 text-left sm:text-center">
+                        <p class="text-sm sm:text-base font-medium text-slate-700 leading-relaxed">
+                            "Selamat datang di hutan rimba Kelas X! 🌴 Tugasmu bertahan hidup dari drama tugas menumpuk kayak lele kelaparan, omelan emak pas lagi <em>push rank</em>, <em>overthinking</em> jam 2 pagi, dan salah masuk grup tongkrongan! <strong>Hati-hati, pilihan jawabannya banyak jebakan Batman!</strong>"
+                        </p>
+                    </div>
+
+                    <!-- Badge 4 Ranah -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-6 text-xs font-bold">
+                        <div class="bg-sky-100 border-2 border-popDark rounded-xl p-2.5 flex flex-col items-center gap-1">
+                            <span class="text-xl">🏫</span>
+                            <span>Ranah Sekolah</span>
+                        </div>
+                        <div class="bg-rose-100 border-2 border-popDark rounded-xl p-2.5 flex flex-col items-center gap-1">
+                            <span class="text-xl">🏠</span>
+                            <span>Ranah Rumah</span>
+                        </div>
+                        <div class="bg-purple-100 border-2 border-popDark rounded-xl p-2.5 flex flex-col items-center gap-1">
+                            <span class="text-xl">🧠</span>
+                            <span>Ranah Pribadi</span>
+                        </div>
+                        <div class="bg-emerald-100 border-2 border-popDark rounded-xl p-2.5 flex flex-col items-center gap-1">
+                            <span class="text-xl">🌍</span>
+                            <span>Ranah Masyarakat</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Identitas Siswa -->
+                    <form id="player-form" onsubmit="startGame(event)" class="bg-slate-50 border-3 border-popDark rounded-2xl p-4 sm:p-6 text-left space-y-4 shadow-comic-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="sm:col-span-2">
+                                <label for="student-name" class="block font-display font-bold text-sm mb-1.5 text-popDark">
+                                    Nama Lengkap (Untuk Piagam) <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="text" id="student-name" required maxlength="36" placeholder="Contoh: Naufal Ramadhan / Aisyah Putri"
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-popDark bg-white font-semibold text-sm focus:outline-none focus:ring-4 focus:ring-popYellow transition">
+                            </div>
+                            <div>
+                                <label for="student-class" class="block font-display font-bold text-sm mb-1.5 text-popDark">
+                                    Kelas <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="text" id="student-class" required maxlength="15" placeholder="Contoh: X-A / X-1"
+                                    class="w-full px-4 py-3 rounded-xl border-2 border-popDark bg-white font-semibold text-sm uppercase focus:outline-none focus:ring-4 focus:ring-popYellow transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="school-name" class="block font-display font-bold text-xs mb-1 text-slate-600">
+                                Nama Sekolah / Madrasah (Opsional)
+                            </label>
+                            <input type="text" id="school-name" maxlength="45" value="MAN 2 Kota Malang" placeholder="Contoh: MAN 2 Kota Malang / SMA Negeri..."
+                                class="w-full px-3.5 py-2 rounded-xl border-2 border-slate-300 focus:border-popDark bg-white font-medium text-xs sm:text-sm focus:outline-none transition">
+                        </div>
+
+                        <button type="submit" class="w-full comic-btn bg-popGreen hover:bg-emerald-400 text-popDark font-display font-bold text-lg sm:text-xl py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2.5 mt-2">
+                            <span>🚀</span> MULAI MISI SURVIVAL SEKARANG!
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. LAYAR PERMAINAN (GAMEPLAY SCREEN)       -->
+        <!-- ========================================== -->
+        <section id="game-screen" class="hidden space-y-4">
+            <!-- HUD Status Bar -->
+            <div class="bg-white rounded-2xl p-3.5 sm:p-4 comic-card">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <!-- Info Level & Soal -->
+                    <div class="flex items-center gap-2">
+                        <span id="level-badge" class="bg-popYellow border-2 border-popDark px-3 py-1 rounded-xl font-display font-bold text-xs sm:text-sm">
+                            LEVEL 1: PEMANASAN
+                        </span>
+                        <span id="question-counter" class="bg-slate-100 border-2 border-popDark px-3 py-1 rounded-xl font-bold text-xs sm:text-sm">
+                            Soal 1 / 12
+                        </span>
+                    </div>
+
+                    <!-- Skor & Streak -->
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <div id="streak-badge" class="hidden bg-orange-100 border-2 border-popDark px-2.5 py-1 rounded-xl font-display font-bold text-xs sm:text-sm text-orange-600 flex items-center gap-1">
+                            <span>🔥</span> <span id="streak-count">0</span>x Combo!
+                        </div>
+                        <div class="bg-popDark text-popYellow px-3.5 py-1 rounded-xl font-display font-bold text-sm sm:text-base flex items-center gap-1.5">
+                            <span>⭐</span> <span id="score-display">0</span> XP
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mental Health / Baterai Sosial Bar -->
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center text-xs font-bold">
+                        <span class="flex items-center gap-1.5">
+                            <span id="hp-emoji">🔋</span> Baterai Mental & Sosial (<span id="player-hud-name">Siswa</span>)
+                        </span>
+                        <span id="hp-text" class="text-emerald-600">100% Aman</span>
+                    </div>
+                    <div class="w-full h-4 bg-slate-200 rounded-full border-2 border-popDark overflow-hidden p-0.5">
+                        <div id="hp-bar" class="h-full bg-popGreen rounded-full transition-all duration-500" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Soal Studi Kasus -->
+            <div id="question-card" class="bg-white rounded-3xl p-5 sm:p-8 comic-card animate-pop">
+                <!-- Tag Ranah Penyesuaian Diri -->
+                <div class="flex items-center justify-between gap-2 mb-4">
+                    <div id="domain-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border-2 border-popDark font-display font-bold text-xs sm:text-sm bg-sky-100">
+                        <span id="domain-icon">🏫</span>
+                        <span id="domain-name">Penyesuaian di Sekolah</span>
+                    </div>
+                    <span id="difficulty-tag" class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        Mudah
+                    </span>
+                </div>
+
+                <!-- Ilustrasi Emoji & Skenario -->
+                <div class="bg-slate-50 border-2 border-popDark rounded-2xl p-4 sm:p-5 mb-6 flex flex-col sm:flex-row items-start gap-4">
+                    <div id="scenario-emoji" class="text-4xl sm:text-5xl bg-white p-3 rounded-2xl border-2 border-popDark shadow-comic-sm shrink-0 self-center sm:self-start">
+                        😅
+                    </div>
+                    <div>
+                        <h2 id="scenario-title" class="font-display font-bold text-lg sm:text-xl text-popDark mb-1.5">
+                            Judul Kasus
+                        </h2>
+                        <p id="scenario-text" class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+                            Deskripsi studi kasus...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pilihan Jawaban -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Opsi di-render dinamis oleh JS -->
+                </div>
+
+                <!-- Kotak Feedback & Bedah Kasus BK (Muncul setelah menjawab) -->
+                <div id="feedback-box" class="hidden mt-6 rounded-2xl border-3 border-popDark p-5 animate-pop">
+                    <div class="flex items-start gap-3.5">
+                        <div id="mentor-avatar" class="text-4xl bg-white p-2.5 rounded-2xl border-2 border-popDark shadow-comic-sm shrink-0">
+                            🧐
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <span id="feedback-status" class="font-display font-bold text-base sm:text-lg">
+                                    Status Jawaban
+                                </span>
+                                <span id="feedback-xp" class="text-xs font-extrabold px-2.5 py-0.5 rounded-full border border-popDark bg-white">
+                                    +100 XP
+                                </span>
+                            </div>
+                            <p id="mentor-roast" class="text-sm sm:text-base font-bold text-popDark mb-3 italic">
+                                "Komentar lucu mentor BK..."
+                            </p>
+                            <div class="bg-white/90 border-2 border-popDark rounded-xl p-3.5 text-xs sm:text-sm text-slate-800 space-y-1.5">
+                                <div class="font-display font-bold text-popPurple flex items-center gap-1.5">
+                                    <span>🔍</span> BEDAH KASUS PSIKOLOGI BK:
+                                </div>
+                                <p id="bk-explanation" class="leading-relaxed">
+                                    Penjelasan psikologis...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 flex justify-end">
+                        <button id="next-btn" onclick="nextQuestion()" class="comic-btn bg-popYellow hover:bg-amber-300 text-popDark font-display font-bold text-base px-6 py-3 rounded-xl flex items-center gap-2">
+                            <span>Lanjut Misi Berikutnya</span> <span>➡️</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. LAYAR AKHIR & PIAGAM (RESULT SCREEN)    -->
+        <!-- ========================================== -->
+        <section id="result-screen" class="hidden space-y-6 animate-pop">
+            <!-- Kartu Ringkasan & Grafik Ranah -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 comic-card">
+                <div class="text-center max-w-2xl mx-auto mb-6">
+                    <span class="inline-block bg-popYellow border-2 border-popDark px-4 py-1 rounded-full font-display font-bold text-xs uppercase tracking-wider mb-2">
+                        🎉 Misi Survival Kelas X Selesai!
+                    </span>
+                    <h2 class="font-display font-bold text-2xl sm:text-4xl text-popDark mb-2">
+                        Predikat: <span id="final-title" class="text-popPink">Duta Adaptasi Anti-Baper</span>
+                    </h2>
+                    <p id="final-desc" class="text-sm sm:text-base text-slate-600 font-medium">
+                        Deskripsi evaluasi diri...
+                    </p>
+                </div>
+
+                <!-- Statistik Utama -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-6 text-center">
+                    <div class="bg-amber-50 border-2 border-popDark rounded-2xl p-3 sm:p-4">
+                        <div class="text-xs font-bold text-slate-500 uppercase">Total Skor</div>
+                        <div id="final-score" class="font-display font-bold text-2xl sm:text-3xl text-popDark">0</div>
+                        <div class="text-[11px] font-semibold text-amber-700">dari 1200 XP</div>
+                    </div>
+                    <div class="bg-emerald-50 border-2 border-popDark rounded-2xl p-3 sm:p-4">
+                        <div class="text-xs font-bold text-slate-500 uppercase">Jawaban Tepat</div>
+                        <div id="final-correct" class="font-display font-bold text-2xl sm:text-3xl text-emerald-600">0/12</div>
+                        <div class="text-[11px] font-semibold text-emerald-700">Anti Jebakan</div>
+                    </div>
+                    <div class="bg-sky-50 border-2 border-popDark rounded-2xl p-3 sm:p-4">
+                        <div class="text-xs font-bold text-slate-500 uppercase">Sisa Baterai</div>
+                        <div id="final-hp" class="font-display font-bold text-2xl sm:text-3xl text-sky-600">100%</div>
+                        <div class="text-[11px] font-semibold text-sky-700">Mental Aman</div>
+                    </div>
+                </div>
+
+                <!-- Grafik Analisis 4 Ranah Penyesuaian Diri -->
+                <div class="bg-slate-50 border-2 border-popDark rounded-2xl p-4 sm:p-5">
+                    <h3 class="font-display font-bold text-base sm:text-lg text-popDark mb-3 flex items-center gap-2">
+                        <span>📊</span> Rapor Peta Penyesuaian Dirimu:
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="domain-stats-container">
+                        <!-- Bar Chart Mini di-render JS -->
+                    </div>
+                    <div id="advice-box" class="mt-4 pt-3 border-t-2 border-dashed border-slate-300 text-xs sm:text-sm text-slate-700 font-medium">
+                        <!-- Saran khusus dari Guru BK -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Area Piagam Penghargaan -->
+            <div class="bg-white rounded-3xl p-5 sm:p-8 comic-card">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-popDark flex items-center gap-2">
+                            <span>🏆</span> Piagam Penghargaan Resmi
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500">Unduh piagam di bawah ini dan kirimkan ke Guru BK sebagai bukti penyelesaian misi!</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="downloadCertificate()" class="comic-btn bg-popGreen hover:bg-emerald-400 text-popDark font-display font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-1.5">
+                            <span>📥</span> Unduh Piagam (PNG)
+                        </button>
+                        <button onclick="window.print()" class="comic-btn bg-popBlue hover:bg-sky-300 text-popDark font-display font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-1.5">
+                            <span>🖨️</span> Cetak
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Piagam (Canvas Rendered Image & Interactive Preview) -->
+                <div id="certificate-print-area" class="w-full overflow-hidden rounded-2xl border-3 border-popDark shadow-comic bg-amber-50">
+                    <canvas id="certificate-canvas" width="1200" height="850" class="w-full h-auto block"></canvas>
+                </div>
+
+                <!-- Tombol Main Lagi -->
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button onclick="resetGame()" class="w-full sm:w-auto comic-btn bg-popYellow hover:bg-amber-300 text-popDark font-display font-bold text-base px-8 py-3.5 rounded-2xl flex items-center justify-center gap-2">
+                        <span>🔄</span> Main Lagi (Perbaiki Skor)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-4xl mx-auto px-4 py-4 text-center text-xs text-slate-500 font-medium">
+        Dibuat dengan ❤️ oleh Tim Edutech & Bimbingan Konseling • Materi Layanan Klasikal Kelas X SMA/MA
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- MODAL PANDUAN MATERI BK                    -->
+    <!-- ========================================== -->
+    <div id="info-modal" class="hidden fixed inset-0 bg-popDark/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 comic-card animate-pop max-h-[85vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display font-bold text-xl text-popDark flex items-center gap-2">
+                    <span>📘</span> Apa Itu Penyesuaian Diri?
+                </h3>
+                <button onclick="toggleModal('info-modal')" class="comic-btn bg-rose-400 text-white font-bold px-3 py-1 rounded-xl text-sm">✕</button>
+            </div>
+            <div class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                <p>
+                    <strong>Penyesuaian Diri (Self-Adjustment)</strong> adalah kemampuan individu untuk merespons tuntutan lingkungan dan konflik batin secara sehat, realistis, dan konstruktif tanpa mengorbankan kesehatan mental maupun nilai moral.
+                </p>
+                <div class="bg-sky-50 p-3 rounded-xl border-2 border-popDark">
+                    <strong class="text-sky-800 block mb-1">🏫 1. Lingkungan Sekolah:</strong>
+                    Beradaptasi dengan kurikulum baru, gaya mengajar guru yang beragam, manajemen tugas, dan dinamika kerja kelompok.
+                </div>
+                <div class="bg-rose-50 p-3 rounded-xl border-2 border-popDark">
+                    <strong class="text-rose-800 block mb-1">🏠 2. Lingkungan Rumah/Keluarga:</strong>
+                    Menyelaraskan ekspektasi orang tua dengan minat pribadi, komunikasi asertif, dan tanggung jawab di rumah.
+                </div>
+                <div class="bg-purple-50 p-3 rounded-xl border-2 border-popDark">
+                    <strong class="text-purple-800 block mb-1">🧠 3. Ranah Pribadi & Emosi:</strong>
+                    Mengelola stres, <em>overthinking</em>, FOMO, perfeksionisme, dan menerima kegagalan sebagai proses belajar.
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border-2 border-popDark">
+                    <strong class="text-emerald-800 block mb-1">🌍 4. Lingkungan Masyarakat:</strong>
+                    Etika bersosialisasi di dunia nyata & digital, saring sebelum sharing, serta tegas menolak tekanan teman sebaya (<em>peer pressure</em>) yang negatif.
+                </div>
+            </div>
+            <button onclick="toggleModal('info-modal')" class="w-full mt-5 comic-btn bg-popYellow font-display font-bold py-2.5 rounded-xl">
+                Siap Paham, Lanjut Main! 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification (Pengganti alert()) -->
+    <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden">
+        <div class="bg-popDark text-white px-5 py-3 rounded-2xl border-2 border-popYellow shadow-comic font-bold text-sm flex items-center gap-2">
+            <span id="toast-icon">🔔</span>
+            <span id="toast-message">Pesan notifikasi</span>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC & WEB AUDIO ENGINE        -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // 1. WEB AUDIO API (EFEK SUARA SINTETIS LUCU)
+        // ==========================================
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sfx-icon');
+            const label = document.getElementById('sfx-label');
+            if (soundEnabled) {
+                icon.textContent = '🔊';
+                label.textContent = 'SFX ON';
+                playSFX('pop');
+            } else {
+                icon.textContent = '🔇';
+                label.textContent = 'SFX OFF';
+            }
+        }
+
+        function playSFX(type) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+
+                if (type === 'pop') {
+                    // Suara klik gelembung lucu
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(420, now);
+                    osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } 
+                else if (type === 'correct') {
+                    // Suara "Ting-Ting!" ceria
+                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                    notes.forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.07);
+                        gain.gain.setValueAtTime(0.22, now + i * 0.07);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.07 + 0.25);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now + i * 0.07);
+                        osc.stop(now + i * 0.07 + 0.25);
+                    });
+                } 
+                else if (type === 'wrong') {
+                    // Suara "Boing / Wah-wah" komedi
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.linearRampToValueAtTime(220, now + 0.15);
+                    osc.frequency.linearRampToValueAtTime(260, now + 0.25);
+                    osc.frequency.exponentialRampToValueAtTime(110, now + 0.5);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } 
+                else if (type === 'fanfare') {
+                    // Suara Kemenangan Akhir
+                    const melody = [
+                        { f: 523.25, t: 0, d: 0.15 },
+                        { f: 523.25, t: 0.16, d: 0.15 },
+                        { f: 523.25, t: 0.32, d: 0.15 },
+                        { f: 659.25, t: 0.48, d: 0.3 },
+                        { f: 587.33, t: 0.80, d: 0.2 },
+                        { f: 659.25, t: 1.02, d: 0.2 },
+                        { f: 783.99, t: 1.24, d: 0.5 }
+                    ];
+                    melody.forEach(n => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(n.f, now + n.t);
+                        gain.gain.setValueAtTime(0.25, now + n.t);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + n.t + n.d);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now + n.t);
+                        osc.stop(now + n.t + n.d);
+                    });
+                }
+            } catch (e) {
+                console.warn('Audio error:', e);
+            }
+        }
+
+        // ==========================================
+        // 2. BANK SOAL BK (12 SOAL BERJENJANG & MENJEBAK)
+        // ==========================================
+        const questionsBank = [
+            // --- LEVEL 1: MUDAH (PEMANASAN ADAPTASI) ---
+            {
+                level: 1,
+                levelName: "LEVEL 1: PEMANASAN",
+                difficulty: "Mudah",
+                domain: "sekolah",
+                domainLabel: "Ranah Sekolah",
+                domainIcon: "🏫",
+                domainColor: "bg-sky-100",
+                emoji: "🚪",
+                title: "Tragedi Salah Masuk Kelas Pas Hari Pertama!",
+                scenario: "Hari pertama masuk SMA/MA, kamu udah duduk manis di pojok belakang sambil sok cool. Pas guru mengabsen nama-nama asing dan nulis 'XII MIPA 3' di papan tulis, kamu baru sadar salah masuk ruangan! Semua mata mulai melirik. Apa tindakanmu?",
+                options: [
+                    {
+                        text: "Pura-pura jadi murid pindahan dari luar negeri biar nggak malu, lalu kabur pas jam istirahat.",
+                        isCorrect: false,
+                        roast: "Waduh, dikira sinetron azab! Nanti pas ditanya bahasa Inggris malah 'yes no yes no' doang."
+                    },
+                    {
+                        text: "Langsung ngacung sopan, minta maaf ke guru karena salah ruang, lalu keluar dengan tenang menuju kelas yang benar.",
+                        isCorrect: true,
+                        roast: "Mantap jiwa! Gentleman/Lady sejati. Malu sebentar jauh lebih baik daripada salah jurusan 3 jam pelajaran!"
+                    },
+                    {
+                        text: "Nunduk dalam-dalam sampai dagu nempel meja, terus merangkak keluar lewat pintu belakang kayak ninja Konoha.",
+                        isCorrect: false,
+                        roast: "Bukannya nggak kelihatan, satu kelas malah ngira ada tuyul masuk ruangan!"
+                    },
+                    {
+                        text: "Tetap duduk diam sampai bel pulang karena takut merusak wibawa sebagai anak baru.",
+                        isCorrect: false,
+                        roast: "Itu bukan menjaga wibawa, Bestie, itu namanya nyasar tapi gengsi!"
+                    }
+                ],
+                explanation: "Penyesuaian diri yang sehat di lingkungan baru dimulai dari penerimaan diri dan keberanian mengakui kekeliruan secara wajar (asertif) tanpa rasa malu berlebihan."
+            },
+            {
+                level: 1,
+                levelName: "LEVEL 1: PEMANASAN",
+                difficulty: "Mudah",
+                domain: "rumah",
+                domainLabel: "Ranah Rumah",
+                domainIcon: "🏠",
+                domainColor: "bg-rose-100",
+                emoji: "🛢️",
+                title: "Misi Darurat Galon & Gas LPG!",
+                scenario: "Baru pulang sekolah capek banget, baru aja rebahan dan mau buka game buat push rank, tiba-tiba Ibu teriak dari dapur: 'Nak, tolong beliin gas LPG sama galon sekarang ya, Ibu mau masak!' Bagaimana reaksimu?",
+                options: [
+                    {
+                        text: "Menjawab 'Iya bentar Ma!' tapi baru berangkat 2 jam kemudian setelah gasnya beneran habis dan Ibu ngamuk.",
+                        isCorrect: false,
+                        roast: "Jurus klasik 'bentar' yang berujung siraman rohani 3 SKS dari emak!"
+                    },
+                    {
+                        text: "Langsung berangkat sambil cemberut, banting pintu pelan, dan ngomel di status WA 'Capek banget jadi anak'.",
+                        isCorrect: false,
+                        roast: "Ini nih jebakan pasif-agresif! Ngerjain sih ngerjain, tapi bikin aura rumah jadi horor."
+                    },
+                    {
+                        text: "Tarik napas sebentar, tunda main game-nya, lalu segera bantu belikan dengan ramah agar urusan rumah cepat beres.",
+                        isCorrect: true,
+                        roast: "Anak berbakti detected! Setelah galon beres, mau push rank sampai subuh pun aura rumah tetap adem!"
+                    },
+                    {
+                        text: "Menjelaskan ke Ibu secara ilmiah bahwa siswa Kelas X butuh waktu healing pasca-sekolah sebelum bekerja fisik.",
+                        isCorrect: false,
+                        roast: "Auto dicoret dari Kartu Keluarga kalau ngomong gitu pas emak lagi pegang spatula!"
+                    }
+                ],
+                explanation: "Di masa remaja, kemampuan menunda kesenangan sesaat (delayed gratification) dan memahami peran tanggung jawab di keluarga adalah kunci keharmonisan di rumah."
+            },
+            {
+                level: 1,
+                levelName: "LEVEL 1: PEMANASAN",
+                difficulty: "Mudah",
+                domain: "pribadi",
+                domainLabel: "Ranah Pribadi",
+                domainIcon: "🧠",
+                domainColor: "bg-purple-100",
+                emoji: "📱",
+                title: "Serangan FOMO Story Instagram!",
+                scenario: "Malam Minggu kamu di rumah aja ngerjain rangkuman materi. Pas buka Instagram, teman-teman SMP-mu yang beda sekolah pada upload story nongkrong estetik di kafe hits. Tiba-tiba dadamu sesak merasa hidupmu paling membosankan. Apa yang kamu lakukan?",
+                options: [
+                    {
+                        text: "Upload foto gelas air putih di meja belajar pakai filter hitam-putih dengan caption galau 'Sendiri lebih tenang'.",
+                        isCorrect: false,
+                        roast: "Aduh, niatnya mau kelihatan bijak tapi malah kelihatan banget lagi caper dan iri hati!"
+                    },
+                    {
+                        text: "Menyadari bahwa media sosial hanya menampilkan 'highlight' terbaik orang lain, lalu fokus menyelesaikan tugas dan istirahat.",
+                        isCorrect: true,
+                        roast: "Cakep! Otakmu sudah kebal algoritma! Ingat, yang posting estetik belum tentu tugasnya udah kelar."
+                    },
+                    {
+                        text: "Memaksa minta uang jajan tambahan ke orang tua malam itu juga biar besok bisa nongkrong di kafe yang sama.",
+                        isCorrect: false,
+                        roast: "Jangan sampai dompet menjerit demi validasi jempol netizen, Kawan!"
+                    },
+                    {
+                        text: "Langsung mute dan unfollow semua teman SMP karena mereka dianggap pamer dan tidak peduli perasaanmu.",
+                        isCorrect: false,
+                        roast: "Baper tingkat kecamatan! Padahal mereka cuma upload kegiatan biasa tanpa niat nyindir kamu."
+                    }
+                ],
+                explanation: "Regulasi emosi pribadi menuntut kesadaran akan bias media sosial (social comparison). Bahagia tidak harus selalu sama dengan standar orang lain."
+            },
+            {
+                level: 1,
+                levelName: "LEVEL 1: PEMANASAN",
+                difficulty: "Mudah",
+                domain: "masyarakat",
+                domainLabel: "Ranah Masyarakat",
+                domainIcon: "🌍",
+                domainColor: "bg-emerald-100",
+                emoji: "🧹",
+                title: "Canggung di Kerja Bakti Kompleks!",
+                scenario: "Hari Minggu pagi ada kerja bakti membersihkan selokan dan lapangan RT. Kamu baru pindah rumah atau baru mulai aktif remaja. Pas keluar rumah, bapak-bapak dan pemuda karang taruna sudah kumpul. Kamu canggung banget. Sikapmu?",
+                options: [
+                    {
+                        text: "Pura-pura olahraga jogging lari kencang melewati kerumunan sambil pakai headset biar nggak diajak ngobrol.",
+                        isCorrect: false,
+                        roast: "Wah, atlet lari dari kenyataan sosial nih! Bapak RT langsung hafal wajahmu sebagai warga misterius."
+                    },
+                    {
+                        text: "Tersenyum, menyapa warga sekitar, memperkenalkan diri singkat, dan langsung ikut membantu pekerjaan ringan yang ada.",
+                        isCorrect: true,
+                        roast: "Super sekali! Modal senyum dan sapaan ramah langsung bikin kamu diterima sebagai warga teladan!"
+                    },
+                    {
+                        text: "Berdiri diam di teras rumah sambil main HP menunggu ada ketua karang taruna yang datang menjemput secara resmi.",
+                        isCorrect: false,
+                        roast: "Kamu anak baru di kompleks, bukan tamu VIP negara yang harus dijemput pakai karpet merah!"
+                    },
+                    {
+                        text: "Langsung mengkritik cara bapak-bapak membersihkan selokan karena menurutmu kurang efektif dibanding tutorial YouTube.",
+                        isCorrect: false,
+                        roast: "Baru datang udah jadi mandor! Bisa-bisa kamu yang disuruh nyemplung duluan!"
+                    }
+                ],
+                explanation: "Penyesuaian sosial di masyarakat membutuhkan inisiatif ramah (proaktif), sopan santun lokal, dan kesediaan berbaur tanpa menunggu diperlakukan istimewa."
+            },
+
+            // --- LEVEL 2: SEDANG (JEBAKAN MULAI HALUS) ---
+            {
+                level: 2,
+                levelName: "LEVEL 2: TANTANGAN",
+                difficulty: "Sedang",
+                domain: "sekolah",
+                domainLabel: "Ranah Sekolah",
+                domainIcon: "🏫",
+                domainColor: "bg-sky-100",
+                emoji: "📚",
+                title: "Hujan Tugas & Gaya Guru yang Beda!",
+                scenario: "Di SMP dulu gurunya santai, tapi di Kelas X ini ada guru yang ngasih tugas kayak ngasih makan ikan lele—banyak dan cepat! Kamu mulai keteteran dan teman-teman di grup kelas pada mengeluh nyinyir soal guru tersebut. Apa langkahmu?",
+                options: [
+                    {
+                        text: "Ikut meramaikan grup kelas dengan bikin stiker meme wajah guru tersebut biar suasana kelas jadi cair dan lucu.",
+                        isCorrect: false,
+                        roast: "Jebakan maut! Niatnya melawak, tapi kalau stiker itu bocor, urusannya bisa panjang sampai ruang BK!"
+                    },
+                    {
+                        text: "Membuat skala prioritas tugas, mencicil dari yang deadline-nya terdekat, dan berdiskusi sehat dengan teman sekelas.",
+                        isCorrect: true,
+                        roast: "Manajemen waktu tingkat dewa! Mengeluh nggak mengurangi halaman tugas, tapi mencicilnya jelas bikin kelar!"
+                    },
+                    {
+                        text: "Mengerjakan semua tugas sekaligus dalam satu malam dengan begadang sampai jam 3 pagi supaya besok bisa pamer.",
+                        isCorrect: false,
+                        roast: "Kelihatannya rajin, tapi besoknya kamu tidur di kelas kayak panda dan imun tubuh langsung drop!"
+                    },
+                    {
+                        text: "Pasrah saja tidak mengerjakan sebagian tugas karena toh banyak teman lain yang juga belum selesai.",
+                        isCorrect: false,
+                        roast: "Mentalitas 'yang penting banyak temannya' itu jebakan klasik menuju nilai merah di rapor!"
+                    }
+                ],
+                explanation: "Transisi akademik ke jenjang SMA/MA menuntut keterampilan manajemen waktu (time management) dan problem-focused coping, bukan sekadar melampiaskan emosi bersama kelompok."
+            },
+            {
+                level: 2,
+                levelName: "LEVEL 2: TANTANGAN",
+                difficulty: "Sedang",
+                domain: "rumah",
+                domainLabel: "Ranah Rumah",
+                domainIcon: "🏠",
+                domainColor: "bg-rose-100",
+                emoji: "🏆",
+                title: "Fenomena 'Anak Tetangga Lebih Hebat'",
+                scenario: "Saat makan malam, orang tuamu tiba-tiba membandingkanmu: 'Lihat tuh si Raka anak tetangga sebelah, baru kelas X udah menang olimpiade, rajin bantu orang tua lagi!' Rasanya nyesek banget dibanding-bandingkan. Apa respon terbaikmu?",
+                options: [
+                    {
+                        text: "Membalas: 'Ya udah, Mama sama Papa adopsi aja si Raka biar jadi anak di sini!' lalu pergi masuk kamar.",
+                        isCorrect: false,
+                        roast: "Dialog sinetron banget! Bukannya bikin orang tua paham, malah bikin suasana rumah kayak perang dingin!"
+                    },
+                    {
+                        text: "Tersenyum kecut lalu diam seribu bahasa selama 3 hari sebagai bentuk protes elegan.",
+                        isCorrect: false,
+                        roast: "Silent treatment di rumah itu nggak menyelesaikan masalah, orang tua malah bingung kamu kenapa."
+                    },
+                    {
+                        text: "Mengelola rasa kesal, lalu menyampaikan dengan sopan: 'Aku senang Raka berprestasi, tapi aku juga lagi berjuang keras sesuai kemampuanku, doakan ya Ma/Pa.'",
+                        isCorrect: true,
+                        roast: "Jawaban kelas atas! Asertif, sopan, dan langsung menyentuh hati orang tua tanpa drama!"
+                    },
+                    {
+                        text: "Membandingkan balik orang tuamu dengan orang tua Raka yang membelikan anaknya motor baru.",
+                        isCorrect: false,
+                        roast: "Waduh, serangan balik yang sangat berbahaya! Bisa-bisa Wi-Fi rumah langsung diputus!"
+                    }
+                ],
+                explanation: "Komunikasi asertif kepada orang tua berarti menyampaikan perasaan dan kebutuhan diri secara jujur namun tetap santun, tanpa menyerang balik atau menarik diri secara destruktif."
+            },
+            {
+                level: 2,
+                levelName: "LEVEL 2: TANTANGAN",
+                difficulty: "Sedang",
+                domain: "pribadi",
+                domainLabel: "Ranah Pribadi",
+                domainIcon: "🧠",
+                domainColor: "bg-purple-100",
+                emoji: "👀",
+                title: "Overthinking Jam 2 Pagi Karena 'Read' Doang!",
+                scenario: "Kamu nge-chat teman sekelas nanya soal jadwal piket. Pesannya cuma di-read (centang biru) dan nggak dibalas sampai malam. Jam 2 pagi kamu masih melek mikir: 'Dia benci sama aku ya? Apa aku salah ngomong pas istirahat tadi?' Gimana mengatasinya?",
+                options: [
+                    {
+                        text: "Kirim chat susulan: 'Oh gitu ya sekarang, cuma di-read doang. Makasih banget loh!' biar dia sadar.",
+                        isCorrect: false,
+                        roast: "Jebakan pasif-agresif! Padahal bisa jadi HP-nya kebuka pas dia lagi ketiduran atau kuotanya habis!"
+                    },
+                    {
+                        text: "Melakukan reality check: menyadari banyak kemungkinan netral (dia sibuk/lupa/ketiduran), lalu taruh HP dan tidur.",
+                        isCorrect: true,
+                        roast: "Mental sehat! Kamu berhasil menghentikan skenario film horor yang dibikin oleh pikiranmu sendiri!"
+                    },
+                    {
+                        text: "Mengecek ulang semua chat dari bulan lalu untuk menganalisis di kata mana kamu mulai dibenci.",
+                        isCorrect: false,
+                        roast: "Overthinking dijadikan pekerjaan penuh waktu! Matamu butuh tidur, bukan jadi detektif!"
+                    },
+                    {
+                        text: "Membuat sindiran halus di Close Friends Instagram tentang 'teman yang berubah setelah kenal orang baru'.",
+                        isCorrect: false,
+                        roast: "Drama yang tidak perlu! Nanti pas ketemu besok ternyata dia cuma lupa pencet kirim."
+                    }
+                ],
+                explanation: "Dalam psikologi kognitif, overthinking sering dipicu oleh distorsi pikiran 'mind reading' (merasa tahu isi pikiran orang lain). Menguji fakta secara objektif dapat meredakan kecemasan."
+            },
+            {
+                level: 2,
+                levelName: "LEVEL 2: TANTANGAN",
+                difficulty: "Sedang",
+                domain: "masyarakat",
+                domainLabel: "Ranah Masyarakat",
+                domainIcon: "🌍",
+                domainColor: "bg-emerald-100",
+                emoji: "📢",
+                title: "Hoaks Panas di Grup WhatsApp Warga/Angkatan!",
+                scenario: "Di grup WhatsApp remaja/angkatan, seseorang menyebarkan info heboh soal peraturan sekolah baru yang aneh dan memprovokasi semua orang untuk protes keras. Infonya belum jelas sumbernya. Apa tindakanmu?",
+                options: [
+                    {
+                        text: "Langsung forward ke semua grup lain dengan tambahan tulisan 'WASPADA! SEBARKAN!' demi kebaikan bersama.",
+                        isCorrect: false,
+                        roast: "Niatnya pahlawan, aslinya malah jadi agen penyebar hoaks berantai!"
+                    },
+                    {
+                        text: "Mengecek kebenaran info ke sumber resmi (OSIS/Wali Kelas), lalu mengingatkan grup dengan bahasa santun agar tidak terprovokasi.",
+                        isCorrect: true,
+                        roast: "Warga digital cerdas! Literasi digitalmu bikin grup tetap kondusif dan anti-drama!"
+                    },
+                    {
+                        text: "Ikut berkomentar pedas memaki pembuat aturan supaya dianggap kompak dan solid oleh teman-teman.",
+                        isCorrect: false,
+                        roast: "Solidaritas tanpa fakta itu namanya ikut-ikutan nyemplung ke jurang, Bestie!"
+                    },
+                    {
+                        text: "Langsung left group secara dramatis tanpa bilang apa-apa agar tidak dikira terlibat.",
+                        isCorrect: false,
+                        roast: "Keluar grup secara tiba-tiba malah bikin orang curiga dan tidak menyelesaikan kesalahpahaman."
+                    }
+                ],
+                explanation: "Penyesuaian diri di masyarakat modern mencakup kecerdasan sosial digital: berpikir kritis (tabayyun/cek fakta) sebelum bereaksi atau menyebarkan informasi."
+            },
+
+            // --- LEVEL 3: SULIT / HOTS (JEBAKAN TINGKAT TINGGI) ---
+            {
+                level: 3,
+                levelName: "LEVEL 3: BOSS LEVEL (HOTS)",
+                difficulty: "Sulit / HOTS",
+                domain: "sekolah",
+                domainLabel: "Ranah Sekolah",
+                domainIcon: "🏫",
+                domainColor: "bg-sky-100",
+                emoji: "🦥",
+                title: "Konflik 'Beban Tim' di Tugas Kelompok!",
+                scenario: "Tugas proyek besar tinggal H-1 dikumpulkan. Satu anggota kelompokmu sama sekali tidak kerja, chat tidak dibalas, tapi pas hari-H dia muncul minta namanya tetap ditulis di cover makalah dengan alasan 'kemarin aku lagi banyak pikiran'. Apa keputusan paling matang?",
+                options: [
+                    {
+                        text: "Tetap menulis namanya demi menjaga perdamaian kelas dan menghindari konflik, meski dalam hati dendam kesumat.",
+                        isCorrect: false,
+                        roast: "Jebakan 'people pleaser'! Ini bukan baik hati, tapi membiarkan ketidakadilan dan menyiksa dirimu sendiri."
+                    },
+                    {
+                        text: "Diam-diam menghapus namanya tanpa memberitahu dia, biar dia kaget dan malu sendiri pas presentasi di depan guru.",
+                        isCorrect: false,
+                        roast: "Wah, jebakan pasif-agresif tingkat tinggi! Kelihatannya tegas, tapi menghukum diam-diam tanpa komunikasi akan memicu permusuhan baru."
+                    },
+                    {
+                        text: "Mengajaknya bicara tegas bersama tim untuk memberi tugas porsi akhir yang masih bisa ia kerjakan sekarang; jika tetap menolak, laporkan kontribusi riil secara objektif ke guru.",
+                        isCorrect: true,
+                        roast: "BRILIAN! Tegas, adil, memberi kesempatan bertanggung jawab, dan tetap transparan. Calon pemimpin masa depan!"
+                    },
+                    {
+                        text: "Menyindir dia secara terbuka di grup kelas dengan menyebutnya 'parasit kelompok yang cuma numpang hidup'.",
+                        isCorrect: false,
+                        roast: "Menyerang harga diri orang di depan umum hanya akan mengalihkan masalah dari tugas menjadi perang mulut!"
+                    }
+                ],
+                explanation: "Penyelesaian konflik interpersonal yang sehat mengutamakan ketegasan (assertiveness) dan keadilan: mengomunikasikan konsekuensi secara terbuka sebelum mengambil tindakan objektif."
+            },
+            {
+                level: 3,
+                levelName: "LEVEL 3: BOSS LEVEL (HOTS)",
+                difficulty: "Sulit / HOTS",
+                domain: "rumah",
+                domainLabel: "Ranah Rumah",
+                domainIcon: "🏠",
+                domainColor: "bg-rose-100",
+                emoji: "🧭",
+                title: "Beda Pilihan Ekskul/Minat dengan Orang Tua!",
+                scenario: "Orang tuamu ingin kamu fokus ikut bimbingan olimpiade sains demi masa depan, sementara kamu sangat berminat mengembangkan bakat di bidang seni/organisasi dan khawatir tidak sanggup jika dipaksa ikut olimpiade. Bagaimana kamu menyikapinya?",
+                options: [
+                    {
+                        text: "Mengiyakan keinginan orang tua di depan mereka, tapi di sekolah kamu sengaja bolos bimbingan olimpiade demi ikut ekskul pilihanmu.",
+                        isCorrect: false,
+                        roast: "Waduh, berbohong demi minat sendiri justru menghancurkan kepercayaan orang tua saat ketahuan nanti!"
+                    },
+                    {
+                        text: "Menolak mentah-mentah sambil berdebat bahwa ini hidupmu dan orang tua tidak berhak mengatur masa depan anak.",
+                        isCorrect: false,
+                        roast: "Terlalu konfrontatif! Orang tua memaksa biasanya karena khawatir masa depanmu, bukan karena benci."
+                    },
+                    {
+                        text: "Mengajak diskusi tenang dengan memaparkan alasan minatmu, rencana pembagian waktu belajar, serta menawarkan solusi kompromi yang terukur.",
+                        isCorrect: true,
+                        roast: "Sangat dewasa! Orang tua akan jauh lebih luluh jika melihat anaknya punya rencana matang, bukan sekadar membantah."
+                    },
+                    {
+                        text: "Mengikuti semua kemauan orang tua tanpa suara sama sekali meski kamu merasa tertekan dan kehilangan semangat belajar.",
+                        isCorrect: false,
+                        roast: "Kepatuhan tanpa komunikasi sehat justru berisiko memicu burnout dan demotivasi di tengah jalan."
+                    }
+                ],
+                explanation: "Kemandirian remaja dalam keluarga dibangun melalui negosiasi yang bertanggung jawab: menghargai niat baik orang tua sambil menunjukkan kesiapan dan komitmen atas pilihan diri."
+            },
+            {
+                level: 3,
+                levelName: "LEVEL 3: BOSS LEVEL (HOTS)",
+                difficulty: "Sulit / HOTS",
+                domain: "pribadi",
+                domainLabel: "Ranah Pribadi",
+                domainIcon: "🧠",
+                domainColor: "bg-purple-100",
+                emoji: "📉",
+                title: "Jebakan Perfeksionisme & Nilai Ulangan Anjlok!",
+                scenario: "Di SMP kamu selalu ranking atas. Tapi di ulangan harian pertama Kelas X, nilaimu di bawah KKM! Kamu merasa gagal total, bodoh, dan malu ketemu guru maupun teman sekelas. Bagaimana kamu memulihkan diri?",
+                options: [
+                    {
+                        text: "Menyalahkan soal ulangan yang terlalu sulit dan cara guru menjelaskan yang membosankan agar harga dirimu tetap terjaga.",
+                        isCorrect: false,
+                        roast: "Mekanisme pertahanan diri (rasionalisasi) yang bikin kamu nyaman sesaat tapi nggak bikin nilai naik!"
+                    },
+                    {
+                        text: "Menerima rasa kecewa secara wajar, mengevaluasi letak kesalahan soal, dan menyusun strategi belajar baru tanpa melabeli diri 'bodoh'.",
+                        isCorrect: true,
+                        roast: "Growth Mindset sejati! Satu nilai jelek di awal Kelas X adalah data untuk evaluasi, bukan vonis masa depan!"
+                    },
+                    {
+                        text: "Belajar non-stop tanpa istirahat dan menolak semua ajakan sosial karena merasa tidak pantas bersenang-senang sebelum nilai sempurna.",
+                        isCorrect: false,
+                        roast: "Jebakan perfeksionisme toksik! Menghukum diri sendiri secara ekstrem justru menurunkan daya serap otak."
+                    },
+                    {
+                        text: "Menurunkan standar target belajar jadi 'asal lulus saja' supaya tidak pernah merasakan sakit hati lagi kalau gagal.",
+                        isCorrect: false,
+                        roast: "Menyerah sebelum bertempur lagi itu namanya menghindari tantangan, bukan beradaptasi!"
+                    }
+                ],
+                explanation: "Resiliensi dan self-compassion sangat krusial saat menghadapi kegagalan akademik pertama. Memisahkan 'nilai yang gagal' dari 'harga diri pribadi' mencegah keputusasaan."
+            },
+            {
+                level: 3,
+                levelName: "LEVEL 3: BOSS LEVEL (HOTS)",
+                difficulty: "Sulit / HOTS",
+                domain: "masyarakat",
+                domainLabel: "Ranah Masyarakat",
+                domainIcon: "🌍",
+                domainColor: "bg-emerald-100",
+                emoji: "🌙",
+                title: "Tekanan Tongkrongan Larut Malam (Peer Pressure)!",
+                scenario: "Kamu baru diajak masuk circle pertemanan yang keren di lingkungan sekitar. Suatu malam, mereka mengajak nongkrong sampai dini hari dan mulai mencoba hal berisiko (merokok/balap liar) sambil bilang: 'Kalau nggak ikut, berarti cupu dan nggak setia kawan!' Sikapmu?",
+                options: [
+                    {
+                        text: "Ikut saja sekali ini demi membuktikan solidaritas dan menjaga penerimaan sosial, yang penting nanti tidak keterusan.",
+                        isCorrect: false,
+                        roast: "Jebakan paling berbahaya! Sekali kompromi pada nilai keselamatan diri, pintu tekanan berikutnya akan terbuka lebar."
+                    },
+                    {
+                        text: "Menceramahi mereka panjang lebar tentang bahaya kesehatan dan hukum pidana di depan tongkrongan agar mereka bertobat.",
+                        isCorrect: false,
+                        roast: "Niatnya mulia, tapi menggurui di tengah tongkrongan malam malah memicu perdebatan dan konfrontasi fisik."
+                    },
+                    {
+                        text: "Menolak dengan tegas namun santai tanpa merendahkan mereka, pamit pulang tepat waktu, dan mengevaluasi ulang lingkaran pertemanan sehat.",
+                        isCorrect: true,
+                        roast: "RESPECT! Kamu punya prinsip kuat (personal boundaries)! Teman sejati menghargai batasanmu, bukan memaksamu celaka."
+                    },
+                    {
+                        text: "Pura-pura sakit perut parah secara mendadak supaya bisa kabur tanpa perlu berani mengatakan 'tidak'.",
+                        isCorrect: false,
+                        roast: "Alasan darurat cuma mempan sekali; besok-besok kamu bakal terus ditekan kalau tidak berani bersikap tegas."
+                    }
+                ],
+                explanation: "Penyesuaian sosial yang matang bukan berarti melebur tanpa prinsip (konformitas buta), melainkan mampu mempertahankan integritas dan batasan diri (healthy boundaries) secara asertif."
+            }
+        ];
+
+        // ==========================================
+        // 3. STATE PERMAINAN
+        // ==========================================
+        let state = {
+            studentName: '',
+            studentClass: '',
+            schoolName: '',
+            currentIdx: 0,
+            score: 0,
+            hp: 100,
+            streak: 0,
+            correctCount: 0,
+            answered: false,
+            domainScores: {
+                sekolah: { correct: 0, total: 3, label: 'Sekolah', icon: '🏫', color: '#0EA5E9' },
+                rumah: { correct: 0, total: 3, label: 'Rumah', icon: '🏠', color: '#F43F5E' },
+                pribadi: { correct: 0, total: 3, label: 'Pribadi', icon: '🧠', color: '#A855F7' },
+                masyarakat: { correct: 0, total: 3, label: 'Masyarakat', icon: '🌍', color: '#22C55E' }
+            }
+        };
+
+        // ==========================================
+        // 4. FUNGSI ALUR PERMAINAN
+        // ==========================================
+        function showToast(msg, icon = '🔔') {
+            const box = document.getElementById('toast-box');
+            document.getElementById('toast-message').textContent = msg;
+            document.getElementById('toast-icon').textContent = icon;
+            box.classList.remove('hidden');
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 3000);
+        }
+
+        function toggleModal(id) {
+            playSFX('pop');
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        function startGame(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim().toUpperCase();
+            const schoolInput = document.getElementById('school-name').value.trim() || 'SMA / Madrasah Aliyah';
+
+            if (!nameInput || !classInput) {
+                showToast('Isi nama dan kelasmu dulu ya biar piagamnya valid!', '⚠️');
+                return;
+            }
+
+            playSFX('pop');
+
+            // Reset State
+            state = {
+                studentName: nameInput,
+                studentClass: classInput,
+                schoolName: schoolInput,
+                currentIdx: 0,
+                score: 0,
+                hp: 100,
+                streak: 0,
+                correctCount: 0,
+                answered: false,
+                domainScores: {
+                    sekolah: { correct: 0, total: 3, label: 'Sekolah', icon: '🏫', color: '#0EA5E9' },
+                    rumah: { correct: 0, total: 3, label: 'Rumah', icon: '🏠', color: '#F43F5E' },
+                    pribadi: { correct: 0, total: 3, label: 'Pribadi', icon: '🧠', color: '#A855F7' },
+                    masyarakat: { correct: 0, total: 3, label: 'Masyarakat', icon: '🌍', color: '#22C55E' }
+                }
+            };
+
+            document.getElementById('player-hud-name').textContent = `${state.studentName} (${state.studentClass})`;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+
+            updateHUD();
+            renderQuestion();
+        }
+
+        function updateHUD() {
+            const q = questionsBank[state.currentIdx];
+            document.getElementById('level-badge').textContent = q.levelName;
+            document.getElementById('question-counter').textContent = `Soal ${state.currentIdx + 1} / ${questionsBank.length}`;
+            document.getElementById('score-display').textContent = state.score;
+
+            // Streak
+            const streakBadge = document.getElementById('streak-badge');
+            if (state.streak >= 2) {
+                streakBadge.classList.remove('hidden');
+                document.getElementById('streak-count').textContent = state.streak;
+            } else {
+                streakBadge.classList.add('hidden');
+            }
+
+            // HP / Baterai Mental
+            const hpBar = document.getElementById('hp-bar');
+            const hpText = document.getElementById('hp-text');
+            const hpEmoji = document.getElementById('hp-emoji');
+            hpBar.style.width = `${state.hp}%`;
+
+            if (state.hp >= 70) {
+                hpBar.className = 'h-full bg-popGreen rounded-full transition-all duration-500';
+                hpText.className = 'text-emerald-600';
+                hpText.textContent = `${state.hp}% Prima`;
+                hpEmoji.textContent = '🔋';
+            } else if (state.hp >= 40) {
+                hpBar.className = 'h-full bg-popYellow rounded-full transition-all duration-500';
+                hpText.className = 'text-amber-600';
+                hpText.textContent = `${state.hp}% Mulai Lelah`;
+                hpEmoji.textContent = '🪫';
+            } else {
+                hpBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-500';
+                hpText.className = 'text-rose-600';
+                hpText.textContent = `${state.hp}% Butuh Healing!`;
+                hpEmoji.textContent = '🆘';
+            }
+        }
+
+        function renderQuestion() {
+            state.answered = false;
+            const q = questionsBank[state.currentIdx];
+
+            // Animasi kartu
+            const card = document.getElementById('question-card');
+            card.classList.remove('animate-pop', 'animate-shake');
+            void card.offsetWidth; // trigger reflow
+            card.classList.add('animate-pop');
+
+            // Domain & Difficulty Tag
+            const domainBadge = document.getElementById('domain-badge');
+            domainBadge.className = `inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border-2 border-popDark font-display font-bold text-xs sm:text-sm ${q.domainColor}`;
+            document.getElementById('domain-icon').textContent = q.domainIcon;
+            document.getElementById('domain-name').textContent = q.domainLabel;
+
+            const diffTag = document.getElementById('difficulty-tag');
+            diffTag.textContent = q.difficulty;
+            if (q.level === 1) {
+                diffTag.className = 'text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-400';
+            } else if (q.level === 2) {
+                diffTag.className = 'text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-400';
+            } else {
+                diffTag.className = 'text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 border border-rose-400';
+            }
+
+            // Konten Soal
+            document.getElementById('scenario-emoji').textContent = q.emoji;
+            document.getElementById('scenario-title').textContent = q.title;
+            document.getElementById('scenario-text').textContent = q.scenario;
+
+            // Render Opsi Jawaban
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'option-btn w-full text-left bg-white rounded-2xl p-3.5 sm:p-4 flex items-start gap-3.5 cursor-pointer';
+                btn.onclick = () => selectOption(idx);
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-xl bg-popYellow border-2 border-popDark font-display font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">
+                        ${letters[idx]}
+                    </span>
+                    <span class="text-sm sm:text-base font-semibold text-slate-800 leading-snug">
+                        ${opt.text}
+                    </span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Sembunyikan Feedback Box
+            document.getElementById('feedback-box').classList.add('hidden');
+        }
+
+        function selectOption(selectedIdx) {
+            if (state.answered) return;
+            state.answered = true;
+
+            const q = questionsBank[state.currentIdx];
+            const chosenOpt = q.options[selectedIdx];
+            const optionButtons = document.querySelectorAll('#options-container button');
+
+            // Tandai semua tombol & nonaktifkan
+            optionButtons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-FEF9C3');
+                const opt = q.options[idx];
+                const badge = btn.querySelector('span:first-child');
+
+                if (opt.isCorrect) {
+                    btn.classList.remove('bg-white');
+                    btn.classList.add('bg-emerald-100', 'border-emerald-700');
+                    badge.classList.remove('bg-popYellow');
+                    badge.classList.add('bg-popGreen', 'text-white');
+                } else if (idx === selectedIdx && !opt.isCorrect) {
+                    btn.classList.remove('bg-white');
+                    btn.classList.add('bg-rose-100', 'border-rose-700');
+                    badge.classList.remove('bg-popYellow');
+                    badge.classList.add('bg-rose-500', 'text-white');
+                } else {
+                    btn.classList.add('opacity-60');
+                }
+            });
+
+            // Kalkulasi Skor & Feedback
+            const feedbackBox = document.getElementById('feedback-box');
+            const mentorAvatar = document.getElementById('mentor-avatar');
+            const feedbackStatus = document.getElementById('feedback-status');
+            const feedbackXp = document.getElementById('feedback-xp');
+            const mentorRoast = document.getElementById('mentor-roast');
+            const bkExplanation = document.getElementById('bk-explanation');
+
+            if (chosenOpt.isCorrect) {
+                playSFX('correct');
+                state.streak++;
+                state.correctCount++;
+                state.domainScores[q.domain].correct++;
+                const bonus = state.streak >= 2 ? 20 : 0;
+                const gained = 100 + bonus;
+                state.score += gained;
+                state.hp = Math.min(100, state.hp + 5);
+
+                feedbackBox.className = 'mt-6 rounded-2xl border-3 border-popDark p-5 bg-emerald-50 animate-pop';
+                mentorAvatar.textContent = '😎';
+                feedbackStatus.textContent = '✨ TEBAKAN JITU! ANTI JEBAKAN!';
+                feedbackStatus.className = 'font-display font-bold text-base sm:text-lg text-emerald-700';
+                feedbackXp.textContent = `+${gained} XP ${bonus > 0 ? '(Combo!)' : ''}`;
+            } else {
+                playSFX('wrong');
+                state.streak = 0;
+                state.hp = Math.max(15, state.hp - 12);
+
+                const card = document.getElementById('question-card');
+                card.classList.remove('animate-pop');
+                void card.offsetWidth;
+                card.classList.add('animate-shake');
+
+                feedbackBox.className = 'mt-6 rounded-2xl border-3 border-popDark p-5 bg-rose-50 animate-pop';
+                mentorAvatar.textContent = '🤦‍♂️';
+                feedbackStatus.textContent = '💥 YAH, KENA JEBAKAN BATMAN!';
+                feedbackStatus.className = 'font-display font-bold text-base sm:text-lg text-rose-700';
+                feedbackXp.textContent = '+0 XP (Baterai -12%)';
+            }
+
+            mentorRoast.textContent = `"${chosenOpt.roast}"`;
+            bkExplanation.textContent = q.explanation;
+
+            // Ubah teks tombol lanjut jika soal terakhir
+            const nextBtn = document.getElementById('next-btn');
+            if (state.currentIdx === questionsBank.length - 1) {
+                nextBtn.innerHTML = '<span>🏆 Lihat Hasil & Cetak Piagam!</span>';
+            } else {
+                nextBtn.innerHTML = '<span>Lanjut Misi Berikutnya</span> <span>➡️</span>';
+            }
+
+            feedbackBox.classList.remove('hidden');
+            updateHUD();
+
+            // Scroll halus ke kotak feedback di layar kecil
+            setTimeout(() => {
+                feedbackBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function nextQuestion() {
+            playSFX('pop');
+            if (state.currentIdx < questionsBank.length - 1) {
+                state.currentIdx++;
+                updateHUD();
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                finishGame();
+            }
+        }
+
+        // ==========================================
+        // 5. LAYAR AKHIR & GENERATOR PIAGAM CANVAS
+        // ==========================================
+        function getPredikat(score, correctCount) {
+            if (correctCount >= 11) {
+                return {
+                    title: "GRANDMASTER BUNGLON SOSIAL & ANTI-BAPER",
+                    desc: "Luar biasa! Kecerdasan emosional dan kemampuan adaptasimu di Kelas X sudah level dewa. Badai tugas, omelan rumah, maupun drama tongkrongan lewat semua!"
+                };
+            } else if (correctCount >= 8) {
+                return {
+                    title: "DUTA ADAPTASI REMAJA TANGGUH",
+                    desc: "Keren banget! Kamu sudah sangat matang menyikapi dinamika sekolah, keluarga, dan pergaulan. Tinggal sedikit polesan lagi biar kebal 100% dari jebakan overthinking!"
+                };
+            } else if (correctCount >= 5) {
+                return {
+                    title: "PEJUANG SURVIVAL KELAS X PANTANG MENYERAH",
+                    desc: "Lumayan! Kamu mulai paham cara bertahan hidup sebagai anak baru, meski sesekali masih kepancing jebakan emosi dan pasif-agresif. Terus latih komunikasi asertifmu ya!"
+                };
+            } else {
+                return {
+                    title: "ANAK BARU MASIH LOADING (BUTUH HEALING)",
+                    desc: "Waduh, kamu lumayan sering kena jebakan Batman nih! Nggak apa-apa, ini latihan awal yang seru. Yuk baca lagi Bedah Kasus BK-nya dan coba ulangi misinya!"
+                };
+            }
+        }
+
+        function finishGame() {
+            playSFX('fanfare');
+            launchConfetti();
+
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const predikat = getPredikat(state.score, state.correctCount);
+            document.getElementById('final-title').textContent = predikat.title;
+            document.getElementById('final-desc').textContent = predikat.desc;
+            document.getElementById('final-score').textContent = state.score;
+            document.getElementById('final-correct').textContent = `${state.correctCount}/12`;
+            document.getElementById('final-hp').textContent = `${state.hp}%`;
+
+            // Render Bar Chart Mini 4 Ranah
+            const statsContainer = document.getElementById('domain-stats-container');
+            statsContainer.innerHTML = '';
+            let weakestDomain = null;
+            let minVal = 4;
+
+            Object.keys(state.domainScores).forEach(key => {
+                const d = state.domainScores[key];
+                const pct = Math.round((d.correct / d.total) * 100);
+                if (d.correct < minVal) {
+                    minVal = d.correct;
+                    weakestDomain = d.label;
+                }
+
+                const item = document.createElement('div');
+                item.className = 'bg-white p-3 rounded-xl border-2 border-popDark';
+                item.innerHTML = `
+                    <div class="flex justify-between items-center text-xs sm:text-sm font-bold mb-1.5">
+                        <span>${d.icon} Ranah ${d.label}</span>
+                        <span>${d.correct}/${d.total} (${pct}%)</span>
+                    </div>
+                    <div class="w-full h-3 bg-slate-200 rounded-full border border-popDark overflow-hidden">
+                        <div class="h-full rounded-full transition-all duration-700" style="width: ${pct}%; background-color: ${d.color};"></div>
+                    </div>
+                `;
+                statsContainer.appendChild(item);
+            });
+
+            // Rekomendasi Guru BK
+            const adviceBox = document.getElementById('advice-box');
+            if (minVal === 3) {
+                adviceBox.innerHTML = `💡 <strong>Catatan Guru BK:</strong> Semua ranah penyesuaian dirimu seimbang dan sangat baik! Pertahankan sikap asertif, empati, dan manajemen emosimu di kelas X.`;
+            } else {
+                adviceBox.innerHTML = `💡 <strong>Catatan Guru BK:</strong> Area yang paling seru untuk terus kamu latih adalah <strong>Penyesuaian Diri di Ranah ${weakestDomain}</strong>. Jangan ragu berdiskusi dengan Guru BK di sekolah jika menemui hambatan nyata!`;
+            }
+
+            // Generate Piagam Penghargaan
+            renderCertificateCanvas(predikat.title);
+        }
+
+        function renderCertificateCanvas(predikatTitle) {
+            const canvas = document.getElementById('certificate-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            // 1. Latar Belakang Krem Hangat & Pola Halus
+            ctx.fillStyle = '#FFFDF7';
+            ctx.fillRect(0, 0, W, H);
+
+            // Polka-dot halus di background
+            ctx.fillStyle = 'rgba(217, 119, 6, 0.06)';
+            for (let x = 30; x < W; x += 36) {
+                for (let y = 30; y < H; y += 36) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // 2. Bingkai Ganda Emas & Navy Estetik
+            ctx.strokeStyle = '#1E1B4B';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(28, 28, W - 56, H - 56);
+
+            ctx.strokeStyle = '#D97706'; // Emas
+            ctx.lineWidth = 4;
+            ctx.strokeRect(46, 46, W - 92, H - 92);
+
+            // Ornamen Sudut Emas
+            const corners = [
+                [46, 46], [W - 46, 46], [46, H - 46], [W - 46, H - 46]
+            ];
+            ctx.fillStyle = '#F59E0B';
+            corners.forEach(([cx, cy]) => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#1E1B4B';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            });
+
+            // 3. Header Instansi / Program BK
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(state.schoolName.toUpperCase(), W / 2, 105);
+
+            ctx.fillStyle = '#64748B';
+            ctx.font = '600 15px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('LAYANAN BIMBINGAN DAN KONSELING • PROGRAM ADAPTASI PESERTA DIDIK BARU', W / 2, 132);
+
+            // Garis pemisah tipis
+            ctx.strokeStyle = '#E2E8F0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(240, 152);
+            ctx.lineTo(W - 240, 152);
+            ctx.stroke();
+
+            // 4. Judul Piagam
+            ctx.fillStyle = '#B45309';
+            ctx.font = '800 54px "Playfair Display", Georgia, serif';
+            ctx.fillText('PIAGAM PENGHARGAAN', W / 2, 222);
+
+            // Nomor Seri Unik
+            const serialNum = `No. BK-X/${new Date().getFullYear()}/${Math.floor(1000 + Math.random() * 9000)}`;
+            ctx.fillStyle = '#475569';
+            ctx.font = '600 15px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(serialNum, W / 2, 254);
+
+            // 5. Teks Penerima
+            ctx.fillStyle = '#334155';
+            ctx.font = '500 20px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('Diberikan dengan bangga kepada:', W / 2, 305);
+
+            // Nama Siswa (Besar & Elegan)
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = '800 46px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(state.studentName, W / 2, 365);
+
+            // Garis bawah nama
+            const nameWidth = Math.min(680, ctx.measureText(state.studentName).width + 80);
+            ctx.strokeStyle = '#F59E0B';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(W / 2 - nameWidth / 2, 382);
+            ctx.lineTo(W / 2 + nameWidth / 2, 382);
+            ctx.stroke();
+
+            // Kelas Siswa
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(`Kelas: ${state.studentClass}`, W / 2, 418);
+
+            // 6. Keterangan Capaian & Predikat
+            ctx.fillStyle = '#334155';
+            ctx.font = '500 18px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('Telah berhasil menaklukkan tantangan simulasi Bimbingan dan Konseling', W / 2, 468);
+            ctx.fillText('"SURVIVAL ANAK BARU: Misi Penyesuaian Diri di Sekolah, Rumah, Pribadi & Masyarakat"', W / 2, 495);
+
+            // Badge Predikat
+            const badgeW = 740;
+            const badgeH = 58;
+            const badgeX = (W - badgeW) / 2;
+            const badgeY = 522;
+            ctx.fillStyle = '#FEF3C7';
+            ctx.beginPath();
+            ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 16);
+            ctx.fill();
+            ctx.strokeStyle = '#D97706';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = '#92400E';
+            ctx.font = '800 22px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(`🏆 PREDIKAT: ${predikatTitle}`, W / 2, badgeY + 37);
+
+            // Skor & Rincian Ranah
+            const s = state.domainScores;
+            const detailText = `Skor Total: ${state.score} XP  |  Sekolah: ${s.sekolah.correct}/3  •  Rumah: ${s.rumah.correct}/3  •  Pribadi: ${s.pribadi.correct}/3  •  Masyarakat: ${s.masyarakat.correct}/3`;
+            ctx.fillStyle = '#475569';
+            ctx.font = '700 16px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(detailText, W / 2, 615);
+
+            // 7. Bagian Tanda Tangan & Stempel Digital
+            const today = new Date();
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const dateStr = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+            // Kiri: Siswa
+            ctx.fillStyle = '#334155';
+            ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('Peserta Misi,', 290, 675);
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(state.studentName, 290, 760);
+            ctx.strokeStyle = '#94A3B8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(180, 738);
+            ctx.lineTo(400, 738);
+            ctx.stroke();
+
+            // Tengah: Medali Emas Stempel
+            ctx.beginPath();
+            ctx.arc(W / 2, 718, 44, 0, Math.PI * 2);
+            ctx.fillStyle = '#F59E0B';
+            ctx.fill();
+            ctx.strokeStyle = '#1E1B4B';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(W / 2, 718, 35, 0, Math.PI * 2);
+            ctx.strokeStyle = '#FFFDF7';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = '800 12px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('VERIFIED', W / 2, 714);
+            ctx.font = '700 10px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('BK ZONE X', W / 2, 729);
+
+            // Kanan: Guru BK
+            ctx.fillStyle = '#334155';
+            ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(`${dateStr}`, W - 290, 655);
+            ctx.fillText('Guru Bimbingan dan Konseling,', W - 290, 678);
+
+            // Tanda tangan kaligrafi digital
+            ctx.save();
+            ctx.translate(W - 290, 722);
+            ctx.rotate(-0.06);
+            ctx.fillStyle = '#1E3A8A';
+            ctx.font = 'italic 700 26px "Playfair Display", serif';
+            ctx.fillText('Tim Guru BK', 0, 0);
+            ctx.restore();
+
+            ctx.strokeStyle = '#94A3B8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(W - 400, 738);
+            ctx.lineTo(W - 180, 738);
+            ctx.stroke();
+
+            ctx.fillStyle = '#1E1B4B';
+            ctx.font = '700 17px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('Konselor Pendidikan SMA/MA', W - 290, 760);
+        }
+
+        function downloadCertificate() {
+            playSFX('pop');
+            const canvas = document.getElementById('certificate-canvas');
+            const link = document.createElement('a');
+            const safeName = state.studentName.replace(/[^a-zA-Z0-9]/g, '_');
+            link.download = `Piagam_BK_Penyesuaian_Diri_${safeName}_${state.studentClass}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+            showToast('Piagam berhasil diunduh! Siap dikirim ke Guru BK 🎉', '📥');
+        }
+
+        function resetGame() {
+            playSFX('pop');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // 6. EFEK CONFETTI PERAYAAN
+        // ==========================================
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#FFE135', '#FF5D8F', '#38BDF8', '#A855F7', '#22C55E'];
+            const pieces = Array.from({ length: 90 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                w: Math.random() * 10 + 6,
+                h: Math.random() * 6 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vy: Math.random() * 3 + 2,
+                vx: (Math.random() - 0.5) * 2,
+                rot: Math.random() * 360,
+                vRot: (Math.random() - 0.5) * 8
+            }));
+
+            let frame = 0;
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    p.rot += p.vRot;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rot * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+
+                frame++;
+                if (frame < 160) {
+                    requestAnimationFrame(animateConfetti);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            animateConfetti();
+        }
+
+        window.addEventListener('resize', () => {
+            const c = document.getElementById('confetti-canvas');
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
